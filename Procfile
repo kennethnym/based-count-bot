@@ -1,1 +1,1 @@
-worker: cmd/server
+worker: bin/server
