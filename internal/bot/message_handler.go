@@ -15,11 +15,14 @@ func handleMessage(env *server.Env) func(*discordgo.Session, *discordgo.MessageC
 		}
 
 		mc := strings.TrimSpace(strings.ToLower(msg.Content))
+		hasMentions := len(msg.Mentions) > 0
 		reply := ""
 
-		if msg.Mentions[0].Username == botUsername {
+		if hasMentions && msg.Mentions[0].Username == botUsername {
 			if strings.Contains(mc, "how based am i") {
 				reply = fetchBasedCount(env, msg.Author.ID)
+			} else if strings.Contains(mc, "based") {
+				reply = "I am infinitely based, you're just stating the obvious."
 			}
 		} else if strings.Contains(mc, "based") {
 			reply = increaseBaseCount(env, msg)
