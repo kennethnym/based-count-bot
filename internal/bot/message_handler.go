@@ -17,12 +17,12 @@ func handleMessage(env *server.Env) func(*discordgo.Session, *discordgo.MessageC
 		mc := strings.TrimSpace(strings.ToLower(msg.Content))
 		reply := ""
 
-		if strings.Contains(mc, "based") {
-			reply = increaseBaseCount(env, msg)
-		} else if msg.Mentions[0].Username == botUsername {
+		if msg.Mentions[0].Username == botUsername {
 			if strings.Contains(mc, "how based am i") {
 				reply = fetchBasedCount(env, msg.Author.ID)
 			}
+		} else if strings.Contains(mc, "based") {
+			reply = increaseBaseCount(env, msg)
 		}
 
 		sess.ChannelMessageSend(msg.ChannelID, reply)
