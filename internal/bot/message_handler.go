@@ -24,8 +24,10 @@ func handleMessage(env *server.Env) func(*discordgo.Session, *discordgo.MessageC
 			} else if strings.Contains(mc, "based") {
 				reply = "I am infinitely based, you're just stating the obvious."
 			}
+		} else if strings.Contains(mc, "unbased") {
+			reply = decreaseBasedCount(env, msg)
 		} else if strings.Contains(mc, "based") {
-			reply = increaseBaseCount(env, msg)
+			reply = increaseBasedCount(env, msg)
 		}
 
 		sess.ChannelMessageSend(msg.ChannelID, reply)
