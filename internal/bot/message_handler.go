@@ -21,12 +21,14 @@ func handleMessage(env *server.Env) func(*discordgo.Session, *discordgo.MessageC
 		if hasMentions && msg.Mentions[0].Username == botUsername {
 			if strings.Contains(mc, "how based am i") {
 				reply = fetchBasedCount(env, msg.Author.ID)
+			} else if strings.Contains(mc, "unbased") {
+				reply = "ratio"
 			} else if strings.Contains(mc, "based") {
 				reply = "I am infinitely based, you're just stating the obvious."
 			}
 		} else if strings.Contains(mc, "unbased") {
 			reply = decreaseBasedCount(env, msg)
-		} else if strings.Contains(mc, "based") {
+		} else if strings.Contains(mc, "based") || strings.Contains(mc, "b a s e d") {
 			reply = increaseBasedCount(env, msg)
 		}
 
