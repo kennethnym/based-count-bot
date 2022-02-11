@@ -15,8 +15,21 @@ func handleMessage(env *server.Env) func(*discordgo.Session, *discordgo.MessageC
 		}
 
 		mc := strings.TrimSpace(strings.ToLower(msg.Content))
-		hasMentions := len(msg.Mentions) > 0
+		mentionCount := len(msg.Mentions)
+		hasMentions := mentionCount > 0
 		reply := ""
+
+		if mentionCount == 0 {
+			return
+		}
+
+		for _, m := range msg.Mentions {
+			if m.Username == botUsername {
+				reply = "Tryna break me? Try harder."
+				sess.ChannelMessageSend(msg.ChannelID, reply)
+				return
+			}
+		}
 
 		if hasMentions && msg.Mentions[0].Username == botUsername {
 			if strings.Contains(mc, "how based am i") {
