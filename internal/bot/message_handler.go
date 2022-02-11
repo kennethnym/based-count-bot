@@ -24,11 +24,17 @@ func handleMessage(env *server.Env) func(*discordgo.Session, *discordgo.MessageC
 		}
 
 		for _, m := range msg.Mentions {
-			if m.Username == botUsername {
-				reply = "Tryna break me? Try harder."
-				sess.ChannelMessageSend(msg.ChannelID, reply)
-				return
+			if m.Username == botUsername && !strings.Contains(reply, "dont break me") {
+				reply += " + dont break me"
+			} else if m.ID == msg.Author.ID && !strings.Contains(reply, "cringe") {
+				reply += " + cringe"
 			}
+		}
+
+		if len(reply) > 0 {
+			reply = "L" + reply
+			sess.ChannelMessageSend(msg.ChannelID, reply)
+			return
 		}
 
 		if hasMentions && msg.Mentions[0].Username == botUsername {
